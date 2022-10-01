@@ -72,7 +72,7 @@ std::size_t GroceryList::size() const
   ///////////////////////// TO-DO (1) //////////////////////////////
     /// All the containers are the same size, so pick one and return the size of that.  Since the forward_list has to calculate the
     /// size on demand, stay away from using that one.
-
+  return _gList_vector.size();
   /////////////////////// END-TO-DO (1) ////////////////////////////
 }
 
@@ -103,7 +103,14 @@ std::size_t GroceryList::find( const GroceryItem & groceryItem ) const
     /// does not exist, return the size of this grocery list as an indicator the grocery item does not exist.  The grocery item will
     /// be in the same position in all the containers (array, vector, list, and forward_list) so pick just one of those to search.
     /// The STL provides the find() function that is a perfect fit here, but you may also write your own loop.
-
+  auto iter = std::find(_gList_vector.begin(), _gList_vector.end(), groceryItem);
+  if (iter != _gList_vector.end())
+  {
+    std::cout << groceryItem.productName() << " was found at index " << iter - _gList_vector.begin() << "\n";
+    return 0;
+  }
+  else
+    return _gList_vector.size();
   /////////////////////// END-TO-DO (2) ////////////////////////////
 }
 
@@ -150,7 +157,11 @@ void GroceryList::insert( const GroceryItem & groceryItem, std::size_t offsetFro
     ///
     /// Remember, you already have a function that tells you if the to-be-inserted grocery item is already in the list, so use it.
     /// Don't implement it again.
-
+  auto iter = std::find(_gList_vector.begin(), _gList_vector.end(), groceryItem);
+  if(iter != _gList_vector.end())
+  {
+    return;
+  } 
   /////////////////////// END-TO-DO (3) ////////////////////////////
 
 
@@ -472,7 +483,7 @@ std::size_t GroceryList::gList_sll_size() const
     /// Some implementations of a singly linked list maintain the size (number of elements in the list).  std::forward_list does
     /// not. The size of singly linked list must be calculated on demand by walking the list from beginning to end counting the
     /// number of elements visited.  The STL's std::distance() function does that, or you can write your own loop.
-
+  return distance(_gList_sll.begin(), _gList_sll.end());
   /////////////////////// END-TO-DO (17) ////////////////////////////
 }
 
